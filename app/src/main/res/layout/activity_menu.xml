@@ -36,4 +36,5 @@
         android:text="Quitter"
         android:textAllCaps="false"
         android:textSize="14sp" />
+
 </LinearLayout>

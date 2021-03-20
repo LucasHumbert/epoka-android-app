@@ -87,10 +87,14 @@
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvTest"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF" />
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:onClick="ajoutMission"
+        android:text="Ajouter"
+        android:textAllCaps="false" />
 
 </LinearLayout>

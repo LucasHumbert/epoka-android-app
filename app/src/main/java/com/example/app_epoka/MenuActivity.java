@@ -9,6 +9,9 @@ import android.widget.TextView;
 public class MenuActivity extends Activity {
 
     private TextView tv;
+    private String nom;
+    private String prenom;
+    private int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,12 +20,15 @@ public class MenuActivity extends Activity {
         tv = (TextView) findViewById(R.id.tv_bonjour);
 
         Intent intent = getIntent();
-        String resultat = intent.getStringExtra("result");
-        tv.append("Bonjour " + resultat);
+        id = intent.getIntExtra("id", 0);
+        nom = intent.getStringExtra("nom");
+        prenom = intent.getStringExtra("prenom");
+        tv.append("Bonjour " + prenom + " " + nom);
     }
 
     public void btn_ajoutMission(View view){
         Intent intent = new Intent(getApplicationContext(), MissionActivity.class);
+        intent.putExtra("id", id);
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

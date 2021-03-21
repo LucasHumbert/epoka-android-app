@@ -21,7 +21,7 @@
         android:layout_marginLeft="20sp"
         android:layout_marginTop="20sp"
         android:layout_marginRight="20sp"
-        android:text="Du :"
+        android:text="Du : (YYYY-MM-DD)"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
@@ -43,7 +43,7 @@
         android:layout_marginLeft="20sp"
         android:layout_marginTop="25sp"
         android:layout_marginRight="20sp"
-        android:text="Au :"
+        android:text="Au : (YYYY-MM-DD)"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 

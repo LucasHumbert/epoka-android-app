@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+//page de connexion
 public class MainActivity extends Activity {
 
     private String urlServiceWeb;
@@ -32,10 +33,14 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
-    public void authentification(View view) throws JSONException {
+
+    public void authentification(View view) throws JSONException { //appelé lors du clique du bouton de connexion
+
+        //récupération des infos des champs
         EditText no = (EditText) findViewById(R.id.et_No);
         EditText mdp = (EditText) findViewById(R.id.et_mdp);
 
+        //vérification des valeurs
         if (no.getText().toString().matches("")) {
             Toast.makeText(this, "Veuillez renseigner votre numéro", Toast.LENGTH_SHORT).show();
             return;
@@ -46,12 +51,18 @@ public class MainActivity extends Activity {
             return;
         }
 
-        urlServiceWeb = "http://192.168.1.2/epoka-app-web/services/serv_authentification-mobile.php?user=" + no.getText() + "&mdp=" + mdp.getText();
+        //url du service php de connexion
+        urlServiceWeb = "http://192.168.1.175/epoka-app-web/services/serv_authentification-mobile.php?user=" + no.getText() + "&mdp=" + mdp.getText();
+
+        //appel de la fonction qui récupère les données en JSON
         JSONObject resultat = getServerDataJson(urlServiceWeb);
 
+        //si l'objet JSON contient une donnée du nom "erreur" alors on affiche un toast comme quoi il y a une erreur et on arrete la fonction
         if(resultat.has("erreur")){
             Toast.makeText(this, "Numéro ou mot de passe incorect", Toast.LENGTH_SHORT).show();
             return;
+
+        //sinon on change d'activité (menu) en transmettant l'id, le nom et le prénom du user connecté
         } else {
             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -63,6 +74,7 @@ public class MainActivity extends Activity {
         }
     }
 
+    //fonction qui va servir pour récupérer les données envoyé par le service php
     private JSONObject getServerDataJson(String urlString) throws JSONException {
         InputStream is = null;
         String result = "";

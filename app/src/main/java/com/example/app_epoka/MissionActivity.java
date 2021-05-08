@@ -26,6 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+//page qui permet d'ajouter une mission
 public class MissionActivity extends Activity {
     private String urlServiceWeb;
     private List<LibelleEtId> list;
@@ -40,16 +41,19 @@ public class MissionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mission);
 
+        //liste qui va stocker les villes récupéré par le service php
         list = new ArrayList<LibelleEtId>();
 
-        urlServiceWeb = "http://192.168.1.2/epoka-app-web/services/serv_afficherVilles.php";
-        getServerDataJson(urlServiceWeb);
+        urlServiceWeb = "http://192.168.1.175/epoka-app-web/services/serv_afficherVilles.php";
+        getServerDataJson(urlServiceWeb); //récupération des données du service
+
 
         ArrayAdapter<LibelleEtId> adapter = new ArrayAdapter<LibelleEtId>(this, android.R.layout.simple_spinner_item, list);
         ville = (Spinner) findViewById(R.id.sVille);
         ville.setAdapter(adapter);
     }
 
+    //classe qui va permettre de remplir le spinner
     public class LibelleEtId{
         public String libelle;
         public int cp;
@@ -70,18 +74,25 @@ public class MissionActivity extends Activity {
         }
     }
 
+    //fonction permettant d'envoyer les infos au service php qui va rentrer la nouvelle mission dans la base
     public void ajoutMission(View view){
+
+        //on récupère les dates
         EditText dateDebut = (EditText) findViewById(R.id.et_Date1);
         EditText dateFin = (EditText) findViewById(R.id.et_Date2);
 
+        //on récupère l'id de la ville sélectionné
         LibelleEtId libelleEtId = (LibelleEtId) ville.getSelectedItem();
         int idVille = libelleEtId.id;
 
+        //on récupère l'id de l'utisateur connecté
         Intent intentId = getIntent();
         id = intentId.getIntExtra("id", 0);
 
-        String urlServiceAjout = "http://192.168.1.2/epoka-app-web/services/serv_ajoutMission.php?dateDebut=" + dateDebut.getText() + "&dateFin=" + dateFin.getText() +"&dest=" + idVille + "&salarie=" + id;
+        //on construit l'url de notre service avec toutes les infos qu'on doit lui passer
+        String urlServiceAjout = "http://192.168.1.175/epoka-app-web/services/serv_ajoutMission.php?dateDebut=" + dateDebut.getText() + "&dateFin=" + dateFin.getText() +"&dest=" + idVille + "&salarie=" + id;
 
+        //puis on appel le service
         InputStream is = null;
         String result = "";
         try {
@@ -100,7 +111,7 @@ public class MissionActivity extends Activity {
             Log.e("log-tag", "Erreur pendant la récupération des données : " + expt.toString());
         }
     }
-
+    //fonction qui va servir pour récupérer les données envoyé par le service php
     private void getServerDataJson(String urlString) {
         InputStream is = null;
         String result = "";
